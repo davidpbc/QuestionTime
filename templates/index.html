@@ -1,14 +1,8 @@
-{% load render_bundle from webpack_loader %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Question Time</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-    <h1>Vue JS</h1>
+{% load render_bundle from webpack_loader %}
+
+{% block content %}
 
     <noscript>
         <strong>We're sorry but the frontend doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
@@ -17,6 +11,5 @@
     <!-- built files will be auto injected -->
 
     {% render_bundle 'app' %}
-    
-</body>
-</html>
+
+{% endblock %}
