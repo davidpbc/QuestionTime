@@ -4,6 +4,10 @@
       <h1>
         {{ question.content }}
       </h1>
+      <QuestionActions
+        v-if="isQuestionAuthor"
+        :slug="question.slug"
+      />
       <p class="mb-0">
         Posted by:
         <span class="author-name">{{ question.author }}</span>
@@ -45,10 +49,10 @@
     </div>
     <div class="container">
       <AnswerComponent
-        v-for="(answer, index) in answers"
+        v-for="answer in answers"
         :answer="answer"
         :requestUser="requestUser"
-        :key="index"
+        :key="answer.id"
         @delete-answer="deleteAnswer"
       />
       <div class="my-4">
@@ -67,6 +71,7 @@
 <script>
 import { apiService } from "@/common/api.service";
 import AnswerComponent from "@/components/Answer.vue";
+import QuestionActions from "@/components/QuestionActions";
 
 export default {
   name: "Question",
@@ -77,7 +82,8 @@ export default {
     }
   },
   components: {
-    AnswerComponent
+    AnswerComponent,
+    QuestionActions
   },
   data() {
     return {
@@ -91,6 +97,11 @@ export default {
       loadingAnswers: false,
       requestUser: null,
     };
+  },
+  computed: {
+    isQuestionAuthor() {
+      return this.question.author === this.requestUser;
+    }
   },
   methods: {
     setPageTitle(title) {
